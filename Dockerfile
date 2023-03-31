@@ -6,7 +6,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 #Install Apache + PHP
 RUN apt-get update && \
     apt-get install apache2 -y && \
-    apt-get install php libapache2-mod-php -y
+    apt-get install php libapache2-mod-php -y\
+    service apache2 start
 
 #Install Python and its library
 RUN apt-get install python3 -y &&\
@@ -29,6 +30,5 @@ COPY scripts/ /var/www/scripts/
 COPY html /var/www/html
 
 EXPOSE 80
-
 
 CMD python3 /var/www/scripts/security_news_watcher.py
