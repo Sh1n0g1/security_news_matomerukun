@@ -18,7 +18,7 @@ ChatGPTのAPIを用いて、セキュリティニュースを分類・要約す�
 Linux上で以下を実施します。
 1. `git clone https://github.com/Sh1n0g1/security_news_matomerukun.git`
 1. `cd security_news_matomerukun`
-1. API Keyを[OpenAI社](https://platform.openai.com/account/api-keys)から入手します。
+1. APIキーを[OpenAI社](https://platform.openai.com/account/api-keys)から入手します。
 1. `scripts/openai_key.py`内にOpenAI社のAPI Keyを入力します。内
   `openai_key="changeme"`
 1. 以下のコマンドでDocker Imageを作成します。  
@@ -28,7 +28,7 @@ Linux上で以下を実施します。
 `docker run -p 80:80 security_news` 
 Pythonスクリプトが実行されます。1記事1分くらいの速さで取得・分類・要約が行われます。  
 
-# 使い方
+## 使い方
 1. ブラウザで`http://ホストのIPアドレス/`にアクセスすると要約された記事が読めます。
 1. 記事の更新は自動的に1時間おきに行われます。
 
