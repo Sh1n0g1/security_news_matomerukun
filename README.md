@@ -27,6 +27,17 @@ Linux上で以下を実施します。
 1. コンテナを実行します。  
 `docker run -p 80:80 security_news` 
 Pythonスクリプトが実行されます。1記事1分くらいの速さで取得・分類・要約が行われます。  
+処理が以下のログで途中で止まっているように見えますが、正常に動作しています。
+```
+ * Starting Apache httpd web server apache2
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to suppress this message
+ * 
+[*] Security News Watcher
+[+] Getting CSS...
+[*] Title:記事のタイトル
+[+] Getting Text...
+[WDM] - Downloading: 100%|██████████| 6.83M/6.83M [00:00<00:00, 11.7MB/s]
+```
 
 ## 使い方
 1. ブラウザで`http://ホストのIPアドレス/`にアクセスすると要約された記事が読めます。
