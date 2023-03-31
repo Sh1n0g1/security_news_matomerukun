@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 import json
 import glob
 import openai
@@ -14,6 +15,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 rss_urls = ['https://www.bleepingcomputer.com/feed/']
 ARTICLES_DIR = '../articles/'
 USER_AGENT='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'
+INTERVAL=60000 # 1 hour
 openai.api_key = openai_key
 
 categories=["incident", "vulnerability", "other"]
@@ -110,50 +112,52 @@ def sha256(text):
 
 if __name__ == "__main__":
   print("[*] Security News Watcher")
-  print("[+] Getting CSS...")
-  links=get_link()
-  
-  for l in links:
-    title=l['title']
-    url=l['link']
-    print(f"[*] Title:{title}")
-    article_hash=sha256(url)
-    if is_article_exists(article_hash):
-      print(f"[-] Already Exists")
-      continue
-    current_time=datetime.datetime.today().strftime('%Y%m%d %H%M%S')
-    filename=ARTICLES_DIR + current_time + '_' + sha256(url) + '.json'
-    print("[+] Getting Text...")
-    text=get_web_text(url)
-    if not text['result']:
-      print(f"[!] Error: {text['error']}")
-      continue
-    article=text['text']
-    print(f"[*] Text Size:{len(article)}")
-    print("[+] Categorizing...")
-    category_result = query_chatgpt_categorize(article).choices[0].message.content
-    print(f"[*] Category:{category_result}")
-    results=[]
-    category="other"
-    for c in categories:
-      if c in category_result.lower():
-        category=c
+  while True:
+    print("[+] Getting CSS...")
+    links=get_link()
+    
+    for l in links:
+      title=l['title']
+      url=l['link']
+      print(f"[*] Title:{title}")
+      article_hash=sha256(url)
+      if is_article_exists(article_hash):
+        print(f"[-] Already Exists")
+        continue
+      current_time=datetime.datetime.today().strftime('%Y%m%d %H%M%S')
+      filename=ARTICLES_DIR + current_time + '_' + sha256(url) + '.json'
+      print("[+] Getting Text...")
+      text=get_web_text(url)
+      if not text['result']:
+        print(f"[!] Error: {text['error']}")
+        continue
+      article=text['text']
+      print(f"[*] Text Size:{len(article)}")
+      print("[+] Categorizing...")
+      category_result = query_chatgpt_categorize(article).choices[0].message.content
+      print(f"[*] Category:{category_result}")
+      results=[]
+      category="other"
+      for c in categories:
+        if c in category_result.lower():
+          category=c
+          print("[+] Summarizing...")
+          results.append(query_chatgpt_summarize(article, c))
+      #If any category does not match
+      if not results:
         print("[+] Summarizing...")
-        results.append(query_chatgpt_summarize(article, c))
-    #If any category does not match
-    if not results:
-      print("[+] Summarizing...")
-      results.append(query_chatgpt_summarize(article))
-    #Saving Result
-    print("[+] Saving...")
-    with open(filename, 'w') as f:
-      json.dump({
-        "article":article,
-        "datetime": str(datetime.datetime.now()),
-        "title":title,
-        "text_size":len(article),
-        "category_result": category_result,
-        "category":category,
-        "url":url,
-        "results":results
-      },f)
+        results.append(query_chatgpt_summarize(article))
+      #Saving Result
+      print("[+] Saving...")
+      with open(filename, 'w') as f:
+        json.dump({
+          "article":article,
+          "datetime": str(datetime.datetime.now()),
+          "title":title,
+          "text_size":len(article),
+          "category_result": category_result,
+          "category":category,
+          "url":url,
+          "results":results
+        },f)
+    time.sleep(INTERVAL)

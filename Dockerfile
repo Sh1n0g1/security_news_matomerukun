@@ -29,3 +29,5 @@ COPY scripts/ /var/www/scripts/
 COPY html /var/www/html
 
 EXPOSE 80
+
+CMD [python3 /var/www/scripts/security_news_watcher.py]
