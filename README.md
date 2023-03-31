@@ -1,10 +1,12 @@
 # セキュリティニュースまとめ君
-ChatGPTのAPIを用いて、セキュリティニュースを分類・要約するプログラムです。  
+ChatGPTのAPIを用いて、セキュリティニュースを分類・要約するプログラムです。 
+出力例   
 ![インシデントサンプル](img/sample.png)
 ![脆弱性サンプル](img/sample2.png)
 
 * DockerベースのWebアプリとPythonスクリプトです。
 * デフォルトは[Bleeping Computer](https://www.bleepingcomputer.com/)のニュース記事のみを取得しています。
+* 開発記  
 [![開発記](img/slide.png)](https://speakerdeck.com/sh1n0g1/chatgpt-apidesekiyuriteiniyusuwoyao-yue-surusisutemuwozuo-tutemita)
 
 
