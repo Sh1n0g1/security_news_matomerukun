@@ -12,13 +12,19 @@ from openai_key import *
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
-rss_urls = ['https://www.bleepingcomputer.com/feed/']
 ARTICLES_DIR = '../articles/'
+
+# Customizable parameter
 USER_AGENT='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'
 INTERVAL=60000 # 1 hour
-openai.api_key = openai_key
-
+rss_urls = ['https://www.bleepingcomputer.com/feed/']
+# If you want to add category, you need to update the
+# contents of "prompt_categorize.txt" and add 
+# "prompt_<category>.txt".
 categories=["incident", "vulnerability", "other"]
+
+
+openai.api_key = openai_key
 
 def is_article_exists(article_hash):
   files=glob.glob(ARTICLES_DIR + '/*_' + article_hash + '.json')
@@ -111,11 +117,13 @@ def sha256(text):
   return hashlib.sha256(text.encode('utf-8')).hexdigest()
 
 if __name__ == "__main__":
+  #Change current directory to script dir
+  os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
   print("[*] Security News Watcher")
   while True:
     print("[+] Getting CSS...")
     links=get_link()
-    
     for l in links:
       title=l['title']
       url=l['link']
