@@ -23,9 +23,9 @@ pip3 install selenium webdriver-manager
 
 #Prepare Files & Dirs
 RUN mkdir /var/www/scripts/ &&\
-mkdir /var/www/articles/
+mkdir /var/www/articles/ &&\
+chown www-data:www-data /var/www/articles/
 COPY scripts/ /var/www/scripts/
 COPY html /var/www/html
 
-COPY index.php /var/www/html/
 EXPOSE 80
