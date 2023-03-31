@@ -5,12 +5,14 @@ ChatGPTのAPIを用いて、セキュリティニュースを分類・要約す�
 
 * DockerベースのWebアプリとPythonスクリプトです。
 * デフォルトは[Bleeping Computer](https://www.bleepingcomputer.com/)のニュース記事のみを取得しています。
+[![開発記](img/slide.png)](https://speakerdeck.com/sh1n0g1/chatgpt-apidesekiyuriteiniyusuwoyao-yue-surusisutemuwozuo-tutemita)
+
 
 ## システム要件
 * Docker
 * インターネットに接続できる
 
-## 使い方
+## セットアップ(10分程度)
 Linux上で以下を実施します。
 1. `git clone https://github.com/Sh1n0g1/security_news_matomerukun.git`
 1. `cd security_news_matomerukun`
@@ -23,7 +25,10 @@ Linux上で以下を実施します。
 1. コンテナを実行します。  
 `docker run -p 80:80 security_news` 
 Pythonスクリプトが実行されます。1記事1分くらいの速さで取得・分類・要約が行われます。  
+
+# 使い方
 1. ブラウザで`http://ホストのIPアドレス/`にアクセスすると要約された記事が読めます。
+1. 記事の更新は自動的に1時間おきに行われます。
 
 
 ## カスタマイズ
