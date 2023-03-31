@@ -6,14 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>セキュリティニュースまとめ君</title>
   <link rel="stylesheet" href="w3.css">
-  <link rel="stylesheet" href="main.css">
 </head>
 <body>
   <h3>セキュリティニュースまとめ君</h3>
   <div class="w3-container">
   <?php
-    $ARTICLE_DIR='../articles/';
+    //Customizable parameter
     $ARTICLES_PER_PAGE=10;
+
+    $ARTICLE_DIR='../articles/';
     if(isset($_GET['page'])){
       $page=$_GET['page'];
       if(!is_numeric($page) || intval($page) != $page || $page <= 0){

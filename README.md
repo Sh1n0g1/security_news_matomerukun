@@ -1,11 +1,11 @@
 # セキュリティニュースまとめ君
 ChatGPTのAPIを用いて、セキュリティニュースを要約するプログラムです。
 * DockerベースのWebアプリとスクリプトです。
-* 
-デフォルトはBleeping Computerのニュース記事のみを取得しています。
+* デフォルトは[Bleeping Computer](https://www.bleepingcomputer.com/)のニュース記事のみを取得しています。
 
 ## システム要件
-* Dockerが入っていること
+* Docker
+* インターネットに接続できる
 
 ## 使い方
 Linux上で以下を実施します。
@@ -19,17 +19,40 @@ Linux上で以下を実施します。
 完了するのに10分くらいかかります。
 1. コンテナを実行します。  
 `docker run -p 80:80 security_news` 
+Pythonスクリプトが実行されます。1記事1分くらいの速さで取得・分類・要約が行われます。  
+1. ブラウザで`http://ホストのIPアドレス/`にアクセスすると要約された記事が読めます。
+
 
 ## カスタマイズ
+以下の項目がロジックを変更することなく、簡単にカスタマイズ可能です。
+
+### スクリプト内
 `script/security_news_watcher.py`の以下の部分がカスタマイズできます。
 ```python
 # Customizable parameter
 USER_AGENT='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'
-INTERVAL=60000 # 1 hour
+INTERVAL=3600 # 1 hour
 rss_urls = ['https://www.bleepingcomputer.com/feed/']
-# If you want to add category, you need to update the
-# contents of "prompt_categorize.txt" and add 
-# "prompt_<category>.txt".
 categories=["incident", "vulnerability", "other"]
 ```
-ニュース記事を取得する際の
+* `USER_AGENT`:ニュース記事を取得する際のUserAgent
+* `INTERVAL`:RSSをチェックする間隔
+* `rss_urls`:RSSのURL
+* `categories`:カテゴリ
+  * カテゴリを追加する場合、`prompt_categorize.txt`を更新し、`prompt_<category>.txt`を作成する必要があります。
+
+### ChatGPTに対するプロンプト
+`script/prompt_*.txt`となっているテキストファイルはChatGPTに送る命令の内容です。
+* `prompt_categorize.txt`:記事の分類
+* `prompt_incident.txt`:インシデントの記事のサマリ
+* `prompt_vulnerability.txt`:脆弱性の記事のサマリ
+* `prompt_other.txt`:その他の記事の記事のサマリ
+
+### Webサイト
+* `html/index.php`内の`$ARTICLES_PER_PAGE=10;`
+* 1ページ当たりに表示する記事の数
+
+## トラブルシューティング
+### 動作中のコンテナのシェルを起動させる
+* `docker ps`で動作しているコンテナの`NAMES`を確認する
+* `docker exec -it <コンテナのNAME> /bin/bash`

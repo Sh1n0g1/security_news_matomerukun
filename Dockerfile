@@ -5,9 +5,10 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 #Install Apache + PHP
 RUN apt-get update && \
-    apt-get install apache2 -y && \
-    apt-get install php libapache2-mod-php -y\
-    service apache2 start
+apt-get install apache2 -y && \
+apt-get install php libapache2-mod-php -y &&\
+service apache2 start && \
+rm /var/www/html/index.html
 
 #Install Python and its library
 RUN apt-get install python3 -y &&\
