@@ -1,0 +1,8 @@
+Categoryze the news article into these categories.
+- vulnerability
+- incident
+- Other
+If the contents are about attack scenario, categorize as Incident.
+If the contents contain both Vulnerability and Incident, answer "vulnerability and incident".
+If the contents does not belong to neither vulnerability or incident, categorize as other.
+You can only answer [vulnerability|incident|vulnerabilty and incident|other]

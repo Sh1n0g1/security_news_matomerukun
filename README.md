@@ -1,1 +1,5 @@
-# security_news_matomerukun
+# セキュリティニュースまとめ君
+ChatGPTのAPIを用いて、セキュリティニュースをまとめるスクリプトおよびWebUIです。
+
+## 使い方
+Dockerイメージ
