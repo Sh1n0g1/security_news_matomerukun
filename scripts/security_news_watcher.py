@@ -119,6 +119,10 @@ def sha256(text):
 if __name__ == "__main__":
   #Change current directory to script dir
   os.chdir(os.path.dirname(os.path.abspath(__file__)))
+  run_eternally=True
+  if(len(sys.argv) > 1):
+    if sys.argv[1]=="oneshot":
+      run_eternally=False
 
   print("[*] Security News Watcher")
   while True:
@@ -168,4 +172,6 @@ if __name__ == "__main__":
           "url":url,
           "results":results
         },f)
+    if not run_eternally:
+      break
     time.sleep(INTERVAL)

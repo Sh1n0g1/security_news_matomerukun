@@ -19,18 +19,18 @@ Linux上で以下を実施します。
 1. `git clone https://github.com/Sh1n0g1/security_news_matomerukun.git`
 1. `cd security_news_matomerukun`
 1. APIキーを[OpenAI社](https://platform.openai.com/account/api-keys)から入手します。
-  * ユーザ登録が必要となります。
-  * クレジットカードによる月次決済が必要です。
-  * 費用については1記事(4000単語想定）あたり0.2円程度です。
-1. `vim ./scripts/openai_key.py`でOpenAI社のAPI Keyを入力します。
+    * ユーザ登録が必要となります。
+    * クレジットカードによる月次決済が必要です。
+    * 費用については1記事(4000単語想定）あたり0.2円程度です。
+1. `vim ./scripts/openai_key.py`でOpenAI社のAPI Keyを入力します。  
   `openai_key="changeme"`
 1. 以下のコマンドでDocker Imageを作成します。
 `docker build . -t security_news`  
-  * 完了するのに5分ほどかかります。
+    * 完了するのに5分ほどかかります。
 1. コンテナを実行します。  
 `docker run -p 80:80 security_news` 
 Pythonスクリプトが実行されます。1記事1分くらいの速さで取得・分類・要約が行われます。  
-処理が以下のログで途中で止まっているように見えますが、正常に動作しています。
+環境によって処理が以下のログで途中で止まっているように見えますが、正常に動作しています。
 ```
  * Starting Apache httpd web server apache2
 AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to suppress this message
@@ -110,4 +110,5 @@ root        1539  0.0  0.1   7368  3100 pts/0    R+   01:22   0:00 ps -aux
 * 以下のコマンドで取得済みの記事一覧のJSONファイルを確認することができる。
   * `ls -l /var/www/articles/`
 * 以下のコマンドでウェブのログを確認することができる。
-  * `tail -f /var/log/`
+  * `tail -f /var/log/apache2/access.log`
+  * `tail -f /var/log/apache2/error.log`
