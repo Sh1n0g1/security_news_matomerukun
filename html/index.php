@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
-  <h3>セキュリティニュースまとめ君</h3>
+  <h3>セキュリティニュースまとめる君</h3>
   <div class="w3-container">
   <?php
     //Customizable parameter
