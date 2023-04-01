@@ -1,5 +1,5 @@
 # まとめる君をUbuntu上で直接で動かす方法（非Docker）
-⚠️工事中⚠️ 詳しい方はDockerfileの中身を見ればわかると思います。以下の手順はまだ動作確認が取れておりません。
+⚠️工事中⚠️ 詳しい方はDockerfileの中身を見ればわかると思います。以下の手順はまだちゃんと動作確認が取れておりません。
 # セットアップ
 * Ubuntuを用意します。推奨バージョン:`22.04`
 * 以下のコマンドをroot権限のあるユーザで実行します。
@@ -33,3 +33,7 @@ python3 /var/www/scripts/security_news_watcher.py oneshot
 ```
 
 cronなどで`python3 /var/www/scripts/security_news_watcher.py oneshot`をしかければ、記事のまとめが定期に行われます。
+例)  
+```cron
+30 * * * * (python3 /var/www/scripts/security_news_watcher.py | logger)
+```

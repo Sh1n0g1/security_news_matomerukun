@@ -28,7 +28,7 @@ Linux上で以下を実施します。
 `docker build . -t security_news`  
     * 完了するのに5分ほどかかります。
 1. コンテナを実行します。  
-`docker run -p 80:80 security_news` 
+`docker run -p 80:80 security_news`  
 Pythonスクリプトが実行されます。1記事1分くらいの速さで取得・分類・要約が行われます。  
 環境によって処理が以下のログで途中で止まっているように見えますが、正常に動作しています。
 ```
