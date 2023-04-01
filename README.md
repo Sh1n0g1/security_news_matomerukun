@@ -19,11 +19,14 @@ Linux上で以下を実施します。
 1. `git clone https://github.com/Sh1n0g1/security_news_matomerukun.git`
 1. `cd security_news_matomerukun`
 1. APIキーを[OpenAI社](https://platform.openai.com/account/api-keys)から入手します。
-1. `scripts/openai_key.py`内にOpenAI社のAPI Keyを入力します。内
+  * ユーザ登録が必要となります。
+  * クレジットカードによる月次決済が必要です。
+  * 費用については1記事(4000単語想定）あたり0.2円程度です。
+1. `vim ./scripts/openai_key.py`でOpenAI社のAPI Keyを入力します。
   `openai_key="changeme"`
-1. 以下のコマンドでDocker Imageを作成します。  
+1. 以下のコマンドでDocker Imageを作成します。
 `docker build . -t security_news`  
-完了するのに10分くらいかかります。
+  * 完了するのに5分ほどかかります。
 1. コンテナを実行します。  
 `docker run -p 80:80 security_news` 
 Pythonスクリプトが実行されます。1記事1分くらいの速さで取得・分類・要約が行われます。  
@@ -42,6 +45,17 @@ AH00558: apache2: Could not reliably determine the server's fully qualified doma
 ## 使い方
 1. ブラウザで`http://ホストのIPアドレス/`にアクセスすると要約された記事が読めます。
 1. 記事の更新は自動的に1時間おきに行われます。
+
+## Dockerコンテナの終了および消し方
+### コンテナの終了
+* `docker ps`で起動しているコンテナ一覧を表示させて、`security_news`イメージの名前(`NAMES`列）を確認する
+* `docker stop <コンテナのNAME>`でコンテナを停止します。
+### コンテナの削除
+* `docker rm  <コンテナのNAME>`でコンテナを削除します。
+* `docker ps -a`でコンテナ一覧が表示できます。コンテナが消えていることを確認します。
+### イメージの削除
+* `docker rmi security_news`でイメージを削除します。
+* `docker images`でイメージ一覧を取得し、`security_news`イメージがないことを確認します。
 
 
 ## カスタマイズ
@@ -77,3 +91,23 @@ categories=["incident", "vulnerability", "other"]
 ### 動作中のコンテナのシェルを起動させる
 * `docker ps`で動作しているコンテナの`NAMES`を確認する
 * `docker exec -it <コンテナのNAME> /bin/bash`
+* `ps -aux`をコマンドを実行すると以下が正しい実行中プロセス一覧となります。
+```
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0   2888   468 ?        Ss   Mar31   0:00 /bin/sh -c service apache2 start; python3 /var/www/scripts/security_news_w
+root          25  0.0  0.6 199888 12360 ?        Ss   Mar31   0:01 /usr/sbin/apache2 -k start
+www-data      30  0.0  0.6 200420 14060 ?        S    Mar31   0:00 /usr/sbin/apache2 -k start
+www-data      31  0.0  0.5 200420 12060 ?        S    Mar31   0:00 /usr/sbin/apache2 -k start
+www-data      32  0.0  0.6 200420 12088 ?        S    Mar31   0:00 /usr/sbin/apache2 -k start
+www-data      33  0.0  0.5 200420 12064 ?        S    Mar31   0:00 /usr/sbin/apache2 -k start
+www-data      34  0.0  0.5 200420 12016 ?        S    Mar31   0:00 /usr/sbin/apache2 -k start
+root          37  0.0  1.9 120088 39384 ?        Sl   Mar31   0:03 python3 /var/www/scripts/security_news_watcher.py
+www-data     282  0.0  0.5 200420 10808 ?        S    Mar31   0:00 /usr/sbin/apache2 -k start
+root        1531  0.5  0.1   4624  3680 pts/0    Ss   01:22   0:00 /bin/bash
+root        1539  0.0  0.1   7368  3100 pts/0    R+   01:22   0:00 ps -aux
+```
+* ApacheとPythonのプロセスが動いていれば正常です。
+* 以下のコマンドで取得済みの記事一覧のJSONファイルを確認することができる。
+  * `ls -l /var/www/articles/`
+* 以下のコマンドでウェブのログを確認することができる。
+  * `tail -f /var/log/`
