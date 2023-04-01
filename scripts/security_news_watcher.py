@@ -16,7 +16,7 @@ ARTICLES_DIR = '../articles/'
 
 # Customizable parameter
 USER_AGENT='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'
-INTERVAL=60000 # 1 hour
+INTERVAL=3600 # 1 hour
 rss_urls = ['https://www.bleepingcomputer.com/feed/']
 # If you want to add category, you need to update the
 # contents of "prompt_categorize.txt" and add 
