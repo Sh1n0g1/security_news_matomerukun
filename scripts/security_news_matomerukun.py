@@ -28,7 +28,7 @@ def get_links_from_rss(rss_urls):
     d = feedparser.parse(rss_url)
     for entry in d.entries:
       if "published_parsed" in entry:
-        pub_date=entry["published_parsed"]
+        pub_date=datetime.datetime.fromtimestamp(time.mktime(entry["published_parsed"]))
       else:
         pub_date=datetime.datetime.now()
       links.append({"title":entry.title,"link":entry.link, "pub_date": pub_date})
