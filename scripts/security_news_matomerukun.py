@@ -25,14 +25,22 @@ def is_article_exists(article_hash):
 def get_links_from_rss(rss_urls):
   links=[]
   for rss_url in rss_urls:
-    d = feedparser.parse(rss_url)
+    try:
+      d = feedparser.parse(rss_url)
+    except Exception as e:
+      exception_type, _, exc_tb = sys.exc_info()
+      file_name = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+      return {
+        "result": False,
+        "error": f"{e} <{exception_type}> {file_name}:{exc_tb.tb_lineno}"
+      }
     for entry in d.entries:
       if "published_parsed" in entry:
         pub_date=datetime.datetime.fromtimestamp(time.mktime(entry["published_parsed"]))
       else:
         pub_date=datetime.datetime.today().strftime('%Y%m%d %H%M%S')
       links.append({"title":entry.title,"link":entry.link, "pub_date": pub_date})
-  return links
+  return {"result": True, "links": links}
 
 def get_web_text(url):
   options=webdriver.chrome.options.Options()
@@ -144,8 +152,11 @@ if __name__ == "__main__":
 
   print("[*] Security News Watcher")
   while True:
-    print("[+] Getting CSS...")
+    print("[+] Getting RSS...")
     links=get_links_from_rss(rss_urls)
+    if not links["result"]:
+      print(f"[!] {links['error']}" )
+      time.sleep(INTERVAL)
     for l in links:
       title=l['title']
       url=l['link']
