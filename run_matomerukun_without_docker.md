@@ -1,5 +1,4 @@
 # まとめる君をUbuntu上で直接で動かす方法（非Docker）
-⚠️工事中⚠️ 以下の手順はまだちゃんと動作確認が取れておりません。
 
 ## セットアップ
 * Ubuntuを用意します。推奨バージョン:`22.04`
@@ -25,7 +24,7 @@ pip3 install selenium webdriver-manager
 git clone https://github.com/Sh1n0g1/security_news_matomerukun.git
 
 cd security_news_matomerukun
-cp ./scripts/ /var/www/
+cp -r ./scripts /var/www/scripts
 cp ./html/index.php /var/www/html/
 mkdir /var/www/articles/
 chown www-data:www-data /var/www/articles/
@@ -35,7 +34,7 @@ chown www-data:www-data /var/www/articles/
 
 ## 実行
 ```
-python3 /var/www/scripts/security_news_watcher.py oneshot
+python3 /var/www/scripts/security_news_matomerukun.py oneshot
 ```
 * oneshotパラメータを実行することにより、Pythonが無限に実行されません。
 
