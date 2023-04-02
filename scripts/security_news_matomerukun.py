@@ -22,12 +22,16 @@ def is_article_exists(article_hash):
   else:
     return False
 
-def get_link():
+def get_links_from_rss(rss_urls):
   links=[]
   for rss_url in rss_urls:
     d = feedparser.parse(rss_url)
     for entry in d.entries:
-      links.append({"title":entry.title,"link":entry.link})
+      if "published_parse" in entry:
+        pub_date=entry["published_parsed"]
+      else:
+        pub_date=datetime.datetime.now()
+      links.append({"title":entry.title,"link":entry.link, "pub_date": pub_date})
   return links
 
 def get_web_text(url):
@@ -141,11 +145,12 @@ if __name__ == "__main__":
   print("[*] Security News Watcher")
   while True:
     print("[+] Getting CSS...")
-    links=get_link()
+    links=get_links_from_rss(rss_urls)
     for l in links:
       title=l['title']
       url=l['link']
-      print(f"[*] Title:{title}")
+      pub_date=l['pub_date']
+      print(f"[*] Date: {pub_date} Title:{title}")
       article_hash=sha256(url)
       if is_article_exists(article_hash):
         print(f"[-] Already Exists")

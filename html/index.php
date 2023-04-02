@@ -25,12 +25,21 @@
     }else{
       $page=1;
     }
+    if(isset($_GET['error'])){
+      $show_error=true;
+    }else{
+      $show_error=false;
+    }
+
     $article_files = array_reverse(array_diff(scandir($ARTICLE_DIR), array('..', '.')));
     $num_of_articles = count($article_files);
     $i=0;
     foreach($article_files as $file){
       $i++;
       if($i <= ($page -1) * $ARTICLES_PER_PAGE){
+        continue;
+      }
+      if(!$show_error && (strstr($file, "error")!=false)){
         continue;
       }
       $article_json=json_decode(file_get_contents($ARTICLE_DIR.$file),true);
