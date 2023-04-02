@@ -92,7 +92,7 @@ def query_chatgpt_categorize(article):
     }
   return {
     "result": True,
-    "category":result
+    "category_result":result
   }
 
 def query_chatgpt_summarize(article, category='other'):
@@ -121,7 +121,7 @@ def query_chatgpt_summarize(article, category='other'):
     }
   return {
     "result": True,
-    "category_result": response
+    "response": response
   }
 
 def sha256(text):
