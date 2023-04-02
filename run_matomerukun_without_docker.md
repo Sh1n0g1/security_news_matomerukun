@@ -1,6 +1,6 @@
 # まとめる君をUbuntu上で直接で動かす方法（非Docker）
 ⚠️工事中⚠️ 詳しい方はDockerfileの中身を見ればわかると思います。以下の手順はまだちゃんと動作確認が取れておりません。
-# セットアップ
+## セットアップ
 * Ubuntuを用意します。推奨バージョン:`22.04`
 * 以下のコマンドをroot権限のあるユーザで実行します。
 ```bash
@@ -28,12 +28,18 @@ cp ./scripts/ /var/www/
 cp ./html/index.php /var/www/html/
 mkdir /var/www/articles/
 chown www-data:www-data /var/www/articles/
+```
 
+* `/var/www/scripts/openai_key.py`にOpenAI社のAPIキーを入力する
+
+## 実行
+```
 python3 /var/www/scripts/security_news_watcher.py oneshot
 ```
+* oneshotパラメータを実行することにより、Pythonが無限に実行されません。
 
 cronなどで`python3 /var/www/scripts/security_news_watcher.py oneshot`をしかければ、記事のまとめが定期に行われます。
 例)  
 ```cron
-30 * * * * (python3 /var/www/scripts/security_news_watcher.py | logger)
+30 * * * * (python3 /var/www/scripts/security_news_matomerukun.py | logger)
 ```

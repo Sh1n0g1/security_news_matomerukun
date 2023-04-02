@@ -32,4 +32,4 @@ COPY html /var/www/html
 
 EXPOSE 80
 
-CMD service apache2 start; python3 /var/www/scripts/security_news_watcher.py
+CMD service apache2 start; python3 /var/www/scripts/security_news_matomerukun.py
