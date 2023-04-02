@@ -30,7 +30,7 @@ def get_links_from_rss(rss_urls):
       if "published_parsed" in entry:
         pub_date=datetime.datetime.fromtimestamp(time.mktime(entry["published_parsed"]))
       else:
-        pub_date=datetime.datetime.now()
+        pub_date=datetime.datetime.today().strftime('%Y%m%d %H%M%S')
       links.append({"title":entry.title,"link":entry.link, "pub_date": pub_date})
   return links
 
@@ -155,8 +155,8 @@ if __name__ == "__main__":
       if is_article_exists(article_hash):
         print(f"[-] Already Exists")
         continue
-      current_time=datetime.datetime.today().strftime('%Y%m%d %H%M%S')
-      filename=ARTICLES_DIR + current_time + '_' + sha256(url) + '.json'
+      file_time=pub_date.replace(":","").replace("-","")
+      filename=ARTICLES_DIR + file_time + '_' + sha256(url) + '.json'
       print("[+] Getting Text...")
       text=get_web_text(url)
       if not text['result']:
