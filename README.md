@@ -25,10 +25,10 @@ Linux上で以下を実施します。
 1. `vim ./scripts/openai_key.py`でOpenAI社のAPI Keyを入力します。  
   `openai_key="changeme"`
 1. 以下のコマンドでDocker Imageを作成します。
-`docker build . -t security_news`  
+`docker build . -t security_matomeru`  
     * 完了するのに5分ほどかかります。
 1. コンテナを実行します。  
-`docker run -p 80:80 security_news`  
+`docker run -p 80:80 security_matomeru`  
 Pythonスクリプトが実行されます。1記事1分くらいの速さで取得・分類・要約が行われます。  
 環境によって処理が以下のログで途中で止まっているように見えますが、正常に動作しています。
 ```
@@ -43,7 +43,8 @@ AH00558: apache2: Could not reliably determine the server's fully qualified doma
 ```
 
 ## 使い方
-1. ブラウザで`http://ホストのIPアドレス/`にアクセスすると要約された記事が読めます。起動したばかりだと記事がありませんが、RSSのエントリー分だけ1記事1分のペースで新しい記事が増えていきます。
+1. ブラウザで`http://ホストのIPアドレス/`にアクセスすると要約された記事が読めます。
+    * 起動したばかりだと記事がありませんが、RSSのエントリー分だけ1記事1分のペースで新しい記事が増えていきます。
 1. それ以降の記事の更新(RSSの再チェック)は自動的に1時間おきに行われます。
 
 ## Dockerコンテナの終了および消し方
@@ -62,7 +63,7 @@ AH00558: apache2: Could not reliably determine the server's fully qualified doma
 以下の項目がロジックを変更することなく、簡単にカスタマイズ可能です。
 
 ### スクリプト内
-`script/security_news_watcher.py`の以下の部分がカスタマイズできます。
+`script/security_news_matomerukun.py`の以下の部分がカスタマイズできます。
 ```python
 # Customizable parameter
 USER_AGENT='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'

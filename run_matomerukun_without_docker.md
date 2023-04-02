@@ -38,7 +38,7 @@ python3 /var/www/scripts/security_news_watcher.py oneshot
 ```
 * oneshotパラメータを実行することにより、Pythonが無限に実行されません。
 
-cronなどで`python3 /var/www/scripts/security_news_watcher.py oneshot`をしかければ、記事のまとめが定期に行われます。
+cronなどで`python3 /var/www/scripts/security_news_matomerukun.py oneshot`をしかければ、記事のまとめが定期に行われます。
 例)  
 ```cron
 30 * * * * (python3 /var/www/scripts/security_news_matomerukun.py | logger)
