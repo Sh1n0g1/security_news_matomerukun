@@ -116,6 +116,20 @@ def query_chatgpt_summarize(article, category='other'):
 def sha256(text):
   return hashlib.sha256(text.encode('utf-8')).hexdigest()
 
+def save_article(filename, article, title, category_result, category, url, summary_results):
+  with open(filename, 'w') as f:
+    json.dump({
+      "article":article,
+      "datetime": str(datetime.datetime.now()),
+      "title":title,
+      "text_size":len(article),
+      "category_result": category_result,
+      "category":category,
+      "url":url,
+      "summary_results":summary_results
+    },f)
+
+
 if __name__ == "__main__":
   #Change current directory to script dir
   os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -142,8 +156,11 @@ if __name__ == "__main__":
       text=get_web_text(url)
       if not text['result']:
         print(f"[!] Error: {text['error']}")
+        filename="error_" + filename
+        save_article(filename, "", title, "Getting Text", "error", url, {"result": False, "error": text['error']})
         continue
-      article=text['text']
+      else:
+        article=text['text']
       print(f"[*] Text Size:{len(article)}")
       print("[+] Categorizing...")
       chatgpt_category_result = query_chatgpt_categorize(article)
@@ -153,30 +170,20 @@ if __name__ == "__main__":
         category_result=chatgpt_category_result["category_result"].choices[0].message.content
 
       print(f"[*] Category:{category_result}")
-      results=[]
+      summary_results=[]
       category="other"
       for c in categories:
         if c in category_result.lower():
           category=c
           print("[+] Summarizing...")
-          results.append(query_chatgpt_summarize(article, c))
+          summary_results.append(query_chatgpt_summarize(article, c))
       #If any category does not match
-      if not results:
+      if not summary_results:
         print("[+] Summarizing...")
-        results.append(query_chatgpt_summarize(article))
+        summary_results.append(query_chatgpt_summarize(article))
       #Saving Result
       print("[+] Saving...")
-      with open(filename, 'w') as f:
-        json.dump({
-          "article":article,
-          "datetime": str(datetime.datetime.now()),
-          "title":title,
-          "text_size":len(article),
-          "category_result": category_result,
-          "category":category,
-          "url":url,
-          "results":results
-        },f)
+      save_article(filename,article,title,category_result,category,url,summary_results)
     if not run_eternally:
       break
     time.sleep(INTERVAL)

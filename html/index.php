@@ -41,7 +41,7 @@
       
       $url=$article_json['url'];
       $text_size=$article_json['text_size'];
-      $results=$article_json['results'];
+      $results=$article_json['summary_results'];
       $summary="";
       foreach($results as $r){
         if($r["result"]){
