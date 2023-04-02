@@ -27,7 +27,7 @@ ChatGPTのAPIを用いて、セキュリティニュースを分類・要約す�
 `docker build . -t security_matomeru`  
     * 完了するのに5分ほどかかります。
 1. コンテナを実行します。  
-`docker run -p 80:80 --shm-size=256m security_matomeru`  
+`docker run -p 80:80 --shm-size=256m -v $(pwd)/articles:/var/www/articles security_matomeru`  
 Pythonスクリプトが実行されます。1記事1分くらいの速さで取得・分類・要約が行われます。  
 環境によって処理が以下のログで途中で止まっているように見えますが、正常に動作しています。
 ```
@@ -45,6 +45,7 @@ AH00558: apache2: Could not reliably determine the server's fully qualified doma
 1. ブラウザで`http://ホストのIPアドレス/`にアクセスすると要約された記事が読めます。
     * 起動したばかりだと記事がありませんが、RSSのエントリー分だけ1記事1分のペースで新しい記事が増えていきます。
 1. それ以降の記事の更新(RSSの再チェック)は自動的に1時間おきに行われます。
+1. 記事はホストのarticlesフォルダに保存され、コンテナを落として、再度立ち上げても残ります。
 
 ## Dockerコンテナの終了および消し方
 ### コンテナの終了
@@ -88,11 +89,7 @@ categories=["incident", "vulnerability", "other"]
 * 1ページ当たりに表示する記事の数
 
 ## トラブルシューティング
-### 記事のエラー表示
-* 記事の取得に失敗した場合、Web上ではエラーは非表示になっています。
-* エラーを表示する場合はURLのGETパラメータに`error`をつくてください。  
-```http://<IPアドレス>/?error```  
-```http://<IPアドレス>/?page=2&error```  
+* トラブルが発生した場合、[Issues](https://github.com/Sh1n0g1/security_news_matomerukun/issues?q=)にて、同様の問題がすでに報告されていないか、検索してみてください。
 
 ### 動作中のコンテナのシェルを起動させる
 * `docker ps`で動作しているコンテナの`NAMES`を確認する
