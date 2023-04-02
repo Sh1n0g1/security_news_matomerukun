@@ -69,20 +69,31 @@ def get_web_text(url):
 def query_chatgpt_categorize(article):
   with open("prompt_categorize.txt") as f:
     order=f.read()
-  result = openai.ChatCompletion.create(
-  model="gpt-3.5-turbo",
-    messages=[
-      {
-        "role": "system",
-        "content": order,
-      },{
-        "role": "user",
-        "content": article
-      },
-    ],
-    max_tokens=512
-  )
-  return result
+  try:
+    result = openai.ChatCompletion.create(
+    model="gpt-3.5-turbo",
+      messages=[
+        {
+          "role": "system",
+          "content": order,
+        },{
+          "role": "user",
+          "content": article
+        },
+      ],
+      max_tokens=512
+    )
+  except Exception as e:
+    exception_type, _, exc_tb = sys.exc_info()
+    file_name = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+    return {
+      "result": False,
+      "error": f"{e} <{exception_type}> {file_name}:{exc_tb.tb_lineno}"
+    }
+  return {
+    "result": True,
+    "category":result
+  }
 
 def query_chatgpt_summarize(article, category='other'):
   with open(f"prompt_{category}.txt") as f:
@@ -102,12 +113,12 @@ def query_chatgpt_summarize(article, category='other'):
       max_tokens=1024
     )
   except Exception as e:
-      exception_type, _, exc_tb = sys.exc_info()
-      file_name = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-      return {
-        "result": False,
-        "error": f"{e} <{exception_type}> {file_name}:{exc_tb.tb_lineno}"
-      }
+    exception_type, _, exc_tb = sys.exc_info()
+    file_name = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+    return {
+      "result": False,
+      "error": f"{e} <{exception_type}> {file_name}:{exc_tb.tb_lineno}"
+    }
   return {
     "result": True,
     "response": response
@@ -146,7 +157,12 @@ if __name__ == "__main__":
       article=text['text']
       print(f"[*] Text Size:{len(article)}")
       print("[+] Categorizing...")
-      category_result = query_chatgpt_categorize(article).choices[0].message.content
+      chatgpt_category_result = query_chatgpt_categorize(article)
+      if not chatgpt_category_result['result']:
+        category_result=chatgpt_category_result['error']
+      else:
+        category_result=chatgpt_category_result["category_result"].choices[0].message.content
+
       print(f"[*] Category:{category_result}")
       results=[]
       category="other"
