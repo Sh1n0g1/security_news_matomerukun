@@ -1,5 +1,6 @@
 # まとめる君をUbuntu上で直接で動かす方法（非Docker）
-⚠️工事中⚠️ 詳しい方はDockerfileの中身を見ればわかると思います。以下の手順はまだちゃんと動作確認が取れておりません。
+⚠️工事中⚠️ 以下の手順はまだちゃんと動作確認が取れておりません。
+
 ## セットアップ
 * Ubuntuを用意します。推奨バージョン:`22.04`
 * 以下のコマンドをroot権限のあるユーザで実行します。
@@ -30,7 +31,7 @@ mkdir /var/www/articles/
 chown www-data:www-data /var/www/articles/
 ```
 
-* `/var/www/scripts/openai_key.py`にOpenAI社のAPIキーを入力する
+* `/var/www/scripts/matomerukun_config.py`にOpenAI社のAPIキーを入力する
 
 ## 実行
 ```

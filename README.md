@@ -11,20 +11,19 @@ ChatGPTのAPIを用いて、セキュリティニュースを分類・要約す�
 
 
 ## システム要件
+* Linux
 * Docker
-* インターネットに接続できる
 
 ## セットアップ(10分程度)
-Linux上で以下を実施します。
 1. `git clone https://github.com/Sh1n0g1/security_news_matomerukun.git`
 1. `cd security_news_matomerukun`
 1. APIキーを[OpenAI社](https://platform.openai.com/account/api-keys)から入手します。
     * ユーザ登録が必要となります。
     * クレジットカードによる月次決済が必要です。
     * 費用については1記事(4000単語想定）あたり0.2円程度です。
-1. `vim ./scripts/openai_key.py`でOpenAI社のAPI Keyを入力します。  
+1. `vim ./scripts/matomerukun_config.py`でOpenAI社のAPI Keyを入力します。  
   `openai_key="changeme"`
-1. 以下のコマンドでDocker Imageを作成します。
+1. 以下のコマンドでDocker Imageを作成します。 
 `docker build . -t security_matomeru`  
     * 完了するのに5分ほどかかります。
 1. コンテナを実行します。  
@@ -63,9 +62,9 @@ AH00558: apache2: Could not reliably determine the server's fully qualified doma
 以下の項目がロジックを変更することなく、簡単にカスタマイズ可能です。
 
 ### スクリプト内
-`script/security_news_matomerukun.py`の以下の部分がカスタマイズできます。
+`script/matomerukun_config.py`の以下の部分がカスタマイズできます。
 ```python
-# Customizable parameter
+
 USER_AGENT='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'
 INTERVAL=3600 # 1 hour
 rss_urls = ['https://www.bleepingcomputer.com/feed/']

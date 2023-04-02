@@ -1,4 +1,2 @@
-/articles/*
-!/articles/.gitkeep
-
+/articles/*.json
 /scripts/__pycache__

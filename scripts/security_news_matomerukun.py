@@ -8,22 +8,11 @@ import hashlib
 import datetime
 import html2text
 import feedparser
-from openai_key import * 
+from matomerukun_config import * 
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
 ARTICLES_DIR = '../articles/'
-
-# Customizable parameter
-USER_AGENT='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'
-INTERVAL=3600 # 1 hour
-rss_urls = ['https://www.bleepingcomputer.com/feed/']
-# If you want to add category, you need to update the
-# contents of "prompt_categorize.txt" and add 
-# "prompt_<category>.txt".
-categories=["incident", "vulnerability", "other"]
-
-
 openai.api_key = openai_key
 
 def is_article_exists(article_hash):
