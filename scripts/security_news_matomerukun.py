@@ -120,11 +120,11 @@ def query_chatgpt_summarize(article, category='other'):
 def sha256(text):
   return hashlib.sha256(text.encode('utf-8')).hexdigest()
 
-def save_article(filename, article, title, category_result, category, url, summary_results):
+def save_article(filename, article, title, category_result, category, url, pub_date, summary_results):
   with open(filename, 'w') as f:
     json.dump({
       "article":article,
-      "datetime": str(datetime.datetime.now()),
+      "datetime": str(pub_date),
       "title":title,
       "text_size":len(article),
       "category_result": category_result,
@@ -162,7 +162,7 @@ if __name__ == "__main__":
       if not text['result']:
         print(f"[!] Error: {text['error']}")
         filename= filename + "_error.json"
-        save_article(filename, "", title, "Getting Text", "error", url, [{"result": False, "error": text['error']}])
+        save_article(filename, "", title, "Getting Text", "error", url, datetime.datetime.now(), [{"result": False, "error": text['error']}])
         continue
       else:
         article=text['text']
@@ -188,7 +188,7 @@ if __name__ == "__main__":
         summary_results.append(query_chatgpt_summarize(article))
       #Saving Result
       print("[+] Saving...")
-      save_article(filename,article,title,category_result,category,url,summary_results)
+      save_article(filename,article,title,category_result,category,url,pub_date, summary_results)
     if not run_eternally:
       break
     time.sleep(INTERVAL)

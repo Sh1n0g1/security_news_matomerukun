@@ -88,6 +88,12 @@ categories=["incident", "vulnerability", "other"]
 * 1ページ当たりに表示する記事の数
 
 ## トラブルシューティング
+### 記事のエラー表示
+* 記事の取得に失敗した場合、Web上ではエラーは非表示になっています。
+* エラーを表示する場合はURLのGETパラメータに`error`をつくてください。  
+```http://<IPアドレス>/?error```  
+```http://<IPアドレス>/?page=2&error```  
+
 ### 動作中のコンテナのシェルを起動させる
 * `docker ps`で動作しているコンテナの`NAMES`を確認する
 * `docker exec -it <コンテナのNAME> /bin/bash`
