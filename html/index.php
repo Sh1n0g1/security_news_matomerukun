@@ -31,7 +31,7 @@
       $show_error=false;
     }
 
-    $article_files = array_reverse(array_diff(scandir($ARTICLE_DIR), array('..', '.')));
+    $article_files = array_reverse(glob($ARTICLE_DIR."*.json"));
     $num_of_articles = count($article_files);
     $i=0;
     foreach($article_files as $file){

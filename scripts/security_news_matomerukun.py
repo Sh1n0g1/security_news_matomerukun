@@ -150,7 +150,7 @@ if __name__ == "__main__":
       title=l['title']
       url=l['link']
       pub_date=l['pub_date']
-      print(f"[*] Date: {pub_date} Title:{title}")
+      print(f"[*] Date: {str(pub_date)} Title:{title}")
       article_hash=sha256(url)
       if is_article_exists(article_hash):
         print(f"[-] Already Exists")
