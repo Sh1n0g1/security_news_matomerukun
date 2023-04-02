@@ -156,7 +156,7 @@ if __name__ == "__main__":
       text=get_web_text(url)
       if not text['result']:
         print(f"[!] Error: {text['error']}")
-        filename="error_" + filename
+        filename= filename + "_error.json"
         save_article(filename, "", title, "Getting Text", "error", url, {"result": False, "error": text['error']})
         continue
       else:
