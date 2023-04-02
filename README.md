@@ -23,7 +23,7 @@ ChatGPTのAPIを用いて、セキュリティニュースを分類・要約す�
     * 費用については1記事(4000単語想定）あたり0.2円程度です。
 1. `vim ./scripts/matomerukun_config.py`でOpenAI社のAPI Keyを入力します。  
   `openai_key="changeme"`
-1. 以下のコマンドでDocker Imageを作成します。 
+1. 以下のコマンドでDocker Imageを作成します。  
 `docker build . -t security_matomeru`  
     * 完了するのに5分ほどかかります。
 1. コンテナを実行します。  
