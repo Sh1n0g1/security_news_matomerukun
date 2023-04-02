@@ -27,7 +27,7 @@ def get_links_from_rss(rss_urls):
   for rss_url in rss_urls:
     d = feedparser.parse(rss_url)
     for entry in d.entries:
-      if "published_parse" in entry:
+      if "published_parsed" in entry:
         pub_date=entry["published_parsed"]
       else:
         pub_date=datetime.datetime.now()
@@ -188,7 +188,7 @@ if __name__ == "__main__":
         summary_results.append(query_chatgpt_summarize(article))
       #Saving Result
       print("[+] Saving...")
-      save_article(filename,article,title,category_result,category,url,pub_date, summary_results)
+      save_article(filename, article, title, category_result, category, url, pub_date, summary_results)
     if not run_eternally:
       break
     time.sleep(INTERVAL)
