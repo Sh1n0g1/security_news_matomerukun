@@ -157,7 +157,7 @@ if __name__ == "__main__":
       if not text['result']:
         print(f"[!] Error: {text['error']}")
         filename= filename + "_error.json"
-        save_article(filename, "", title, "Getting Text", "error", url, {"result": False, "error": text['error']})
+        save_article(filename, "", title, "Getting Text", "error", url, [{"result": False, "error": text['error']}])
         continue
       else:
         article=text['text']
