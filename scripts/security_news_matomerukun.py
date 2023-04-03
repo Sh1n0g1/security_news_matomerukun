@@ -57,15 +57,18 @@ def get_web_text(url):
   try:
     chrome.get(url)
     html=chrome.page_source
-    h=html2text.HTML2Text()
-    h.ignore_links=True
-    h.ignore_images=True
-    text=h.handle(html)
-    return {"result": True, "text": text}
   except Exception as e:
       exception_type, _, exc_tb = sys.exc_info()
       file_name = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
       return {"result": False, "error": f"{e} <{exception_type}> {file_name}:{exc_tb.tb_lineno}"}
+  finally:
+    chrome.quit()
+  h=html2text.HTML2Text()
+  h.ignore_links=True
+  h.ignore_images=True
+  text=h.handle(html)
+  return {"result": True, "text": text}
+  
 
 def query_chatgpt_categorize(article):
   with open("prompt_categorize.txt") as f:

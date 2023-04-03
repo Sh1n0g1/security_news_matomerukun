@@ -1,8 +1,8 @@
 openai_key="changeme"
 
 # Article Max Size
-#  The article bigger than the ARTICLE_MAX_SIZE value will be trimmed, as GPT3.5 only supports up to 4096 words (nearly 11000 characters) 
-ARTICLE_MAX_SIZE=11000
+#  The article bigger than the ARTICLE_MAX_SIZE value will be trimmed, as GPT3.5 only supports up to 4096 words (nearly 10500 characters) 
+ARTICLE_MAX_SIZE=10500
 
 # Customizable parameter
 #  The user agent used to access to the news site.
