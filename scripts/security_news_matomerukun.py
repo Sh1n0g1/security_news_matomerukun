@@ -166,7 +166,7 @@ if __name__ == "__main__":
       if is_article_exists(article_hash):
         print(f"[-] Already Exists")
         continue
-      file_time=pub_date.replace(":","").replace("-","")
+      file_time=str(pub_date).replace(":","").replace("-","")
       filename=ARTICLES_DIR + file_time + '_' + sha256(url) + '.json'
       print("[+] Getting Text...")
       text=get_web_text(url)
