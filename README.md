@@ -27,7 +27,7 @@ ChatGPTのAPIを用いて、セキュリティニュースを分類・要約す�
 `docker build . -t security_matomeru`  
     * 完了するのに5分ほどかかります。
 1. コンテナを実行します。  
-`docker run -p 80:80 --shm-size=256m -v $(pwd)/articles:/var/www/articles security_matomeru`  
+`docker run -p 80:80 --shm-size=256m -v $(pwd)/articles:/var/www/articles --name security_matomeru security_matomeru`  
 Pythonスクリプトが実行されます。1記事1分くらいの速さで取得・分類・要約が行われます。  
 環境によって処理が以下のログで途中で止まっているように見えますが、正常に動作しています。
 ```
