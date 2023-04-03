@@ -30,7 +30,7 @@ mkdir /var/www/articles/
 chown www-data:www-data /var/www/articles/
 ```
 
-* `/var/www/scripts/matomerukun_config.py`にOpenAI社のAPIキーを入力する
+* `/var/www/scripts/matomerukun_config.py`の`OPENAI_KEY`変数にOpenAI社のAPIキーを入力する
 
 ## 実行
 ```

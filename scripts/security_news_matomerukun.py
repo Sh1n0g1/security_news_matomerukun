@@ -13,7 +13,7 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
 ARTICLES_DIR = '../articles/'
-openai.api_key = openai_key
+openai.api_key = OPENAI_KEY
 
 def is_article_exists(article_hash):
   files=glob.glob(ARTICLES_DIR + '/*_' + article_hash + '.json')
@@ -156,7 +156,7 @@ if __name__ == "__main__":
   print("[*] Security News Watcher")
   while True:
     print("[+] Getting RSS...")
-    links=get_links_from_rss(rss_urls)
+    links=get_links_from_rss(RSS_URLS)
     if not links["result"]:
       print(f"[!] {links['error']}" )
       time.sleep(INTERVAL)
@@ -193,7 +193,7 @@ if __name__ == "__main__":
       print(f"[*] Category:{category_result}")
       summary_results=[]
       category="other"
-      for c in categories:
+      for c in CATEGORIES:
         if c in category_result.lower():
           category=c
           print("[+] Summarizing...")

@@ -22,7 +22,7 @@ ChatGPTのAPIを用いて、セキュリティニュースを分類・要約す�
     * クレジットカードによる月次決済が必要です。
     * 費用については1記事(4000単語想定）あたり0.2円程度です。
 1. `vim ./scripts/matomerukun_config.py`でOpenAI社のAPI Keyを入力します。  
-  `openai_key="changeme"`
+  `OPENAI_KEY="changeme"`
 1. 以下のコマンドでDocker Imageを作成します。  
 `docker build . -t security_matomeru`  
     * 完了するのに5分ほどかかります。
@@ -68,13 +68,13 @@ AH00558: apache2: Could not reliably determine the server's fully qualified doma
 
 USER_AGENT='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'
 INTERVAL=3600 # 1 hour
-rss_urls = ['https://www.bleepingcomputer.com/feed/']
-categories=["incident", "vulnerability", "other"]
+RSS_URLS = ['https://www.bleepingcomputer.com/feed/']
+CATEGORIES=["incident", "vulnerability", "other"]
 ```
 * `USER_AGENT`:ニュース記事を取得する際のUserAgent
 * `INTERVAL`:RSSをチェックする間隔
-* `rss_urls`:RSSのURL
-* `categories`:カテゴリ
+* `RSS_URLS`:RSSのURL
+* `CATEGORIES`:カテゴリ
   * カテゴリを追加する場合、`prompt_categorize.txt`を更新し、`prompt_<category>.txt`を作成する必要があります。
 
 ### ChatGPTに対するプロンプト

@@ -1,8 +1,9 @@
-openai_key="changeme"
+OPENAI_KEY="changeme"
 
 # Article Max Size
-#  The article bigger than the ARTICLE_MAX_SIZE value will be trimmed, as GPT3.5 only supports up to 4096 words (nearly 10500 characters) 
-ARTICLE_MAX_SIZE=10500
+#  The article bigger than the ARTICLE_MAX_SIZE value will be trimmed, as GPT3.5 only supports up to 4096 words (nearly 10000 characters) 
+ARTICLE_MAX_SIZE=10000
+
 
 # Customizable parameter
 #  The user agent used to access to the news site.
@@ -13,11 +14,11 @@ INTERVAL=3600 # 1 hour
 
 
 # RSS Feed URL
-rss_urls = ['https://www.bleepingcomputer.com/feed/']
+RSS_URLS = ['https://www.bleepingcomputer.com/feed/']
 
 # Category
 ## If you want to add category, you need to update the
 ## contents of "prompt_categorize.txt" and add 
 ## "prompt_<category>.txt".
 
-categories=["incident", "vulnerability", "other"]
+CATEGORIES=["incident", "vulnerability", "other"]
