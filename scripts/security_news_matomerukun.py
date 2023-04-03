@@ -178,7 +178,7 @@ if __name__ == "__main__":
       else:
         article=text['text']
       print(f"[*] Text Size:{len(article)}")
-      if len(article > ARTICLE_MAX_SIZE):
+      if len(article) > ARTICLE_MAX_SIZE:
         article=article[0:ARTICLE_MAX_SIZE]
       print("[+] Categorizing...")
       chatgpt_category_result = query_chatgpt_categorize(article)
