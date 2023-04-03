@@ -157,7 +157,7 @@ if __name__ == "__main__":
     if not links["result"]:
       print(f"[!] {links['error']}" )
       time.sleep(INTERVAL)
-    for l in links:
+    for l in links['links']:
       title=l['title']
       url=l['link']
       pub_date=l['pub_date']
